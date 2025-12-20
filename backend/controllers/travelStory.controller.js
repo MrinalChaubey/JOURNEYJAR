@@ -1,6 +1,8 @@
 
 import TravelStory from "../models/travelStory.model.js"
 import { errorHandler } from "../utils/error.js"
+import { fileURLToPath } from "url";
+import path from "path";
 
 
 export const addTravelStory = async (req, res, next) => {
@@ -50,3 +52,22 @@ export const getAllTravelStory = async (req, res, next) => {
     next(error)
   }
 }
+
+export const imageUpload = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return next(errorHandler(400, "No image uploaded"))
+    }
+
+    const imageUrl = `http://localhost:3000/uploads/${req.file.filename}`
+
+    res.status(201).json({ imageUrl })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const rootDir = path.join(__dirname, "..")
