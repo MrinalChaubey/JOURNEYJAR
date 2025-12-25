@@ -141,3 +141,38 @@ export const editTravelStory = async (req, res, next) => {
     next(error)
   }
 }
+
+export const deleteTravelStory = async (req, res, next) => {
+  const { id } = req.params
+  const userId = req.user.id
+
+  try {
+    const travelStory = await TravelStory.findOne({ _id: id, userId })
+
+    if (!travelStory) {
+      return next(errorHandler(404, "Travel Story not found!"))
+    }
+
+    // delete travel story from database
+    await travelStory.deleteOne()
+
+    const placeholderImageUrl = `http://localhost:3000/assets/placeholderImage.png`
+    const imageUrl = travelStory.imageUrl
+
+    if (imageUrl && imageUrl !== placeholderImageUrl) {
+      const filename = path.basename(imageUrl)
+      const filePath = path.join(rootDir, "uploads", filename)
+
+      if (fs.existsSync(filePath)) {
+        await fs.promises.unlink(filePath)
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Travel story deleted successfully!",
+    })
+  } catch (error) {
+    next(error)
+  }
+}
