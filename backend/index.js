@@ -1,8 +1,9 @@
-import express from "express" 
+import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import path from "path"
+import cors from "cors"
 
 import authRoutes from "./routes/auth.route.js"
 import userRoutes from "./routes/user.route.js"
@@ -20,14 +21,21 @@ mongoose
     console.log(err)
   })
 
-
 const app = express()
 
-app.use(cookieParser()) 
+// Enable CORS for frontend (Replace with your frontend URL)
+app.use(
+  cors({
+    origin: "http://localhost:5173", //frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow CRUD operations
+    credentials: true, // Allow cookies & authorization headers
+  })
+)
+
+app.use(cookieParser())
 
 // for allowing json object in req body
 app.use(express.json())
-
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000!")
@@ -42,6 +50,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+
 app.use("/assets", express.static(path.join(__dirname, "assets")))
 
 app.use((err, req, res, next) => {
