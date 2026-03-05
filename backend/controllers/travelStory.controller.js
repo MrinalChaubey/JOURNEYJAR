@@ -153,11 +153,10 @@ export const deleteTravelStory = async (req, res, next) => {
       return next(errorHandler(404, "Travel Story not found!"))
     }
 
-    // delete travel story from database
     await travelStory.deleteOne()
-    
-    const imageUrl = travelStory.imageUrl || "http://localhost:3000/assets/placeholderImage.png"
 
+    const placeholderImageUrl = "http://localhost:3000/assets/placeholderImage.png"
+    const imageUrl = travelStory.imageUrl || placeholderImageUrl
 
     if (imageUrl && imageUrl !== placeholderImageUrl) {
       const filename = path.basename(imageUrl)
