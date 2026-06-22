@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home/Home"
 import Login from "./pages/Auth/login" //In the correct video it is Login but I think login change will work.
-import SignUp from "./pages/Auth/SignUp"
+import SignUp from "./pages/Auth/Signup"
 import PrivateRoute from "./components/PrivateRoute"
 
 const App = () => {
