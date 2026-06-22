@@ -100,15 +100,6 @@ npm install
 npm run dev
 ```
 
-## 📸 Screenshots
-
-Add screenshots of:
-
-* Login Page
-* Sign Up Page
-* Dashboard
-* Add Story Modal
-* Story Details Page
 
 ## 🎯 Future Enhancements
 
